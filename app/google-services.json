@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "855954980694",
+    "project_id": "honneycomb-d1897",
+    "storage_bucket": "honneycomb-d1897.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855954980694:android:b4f4f0ebecf3fc4b35e0f7",
+        "android_client_info": {
+          "package_name": "com.example.honeycumb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855954980694-j0ib10v6sg41lp68a3fv7vip8i9i8oa3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.honeycumb",
+            "certificate_hash": "7c49de7df7fe750ec112beab4ecbb0f3361d5a2a"
+          }
+        },
+        {
+          "client_id": "855954980694-i30jr5ea6h4ellq4uuersgmq94kmrpaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIypiuzv2ROZf3VmjHUOuPb6cKTki-GKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855954980694-i30jr5ea6h4ellq4uuersgmq94kmrpaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

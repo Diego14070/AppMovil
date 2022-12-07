@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+    <item
+        android:id="@+id/navigation_sms"
+        android:icon="@drawable/ic_baseline_chat"
+        android:title="SMS" />
+    <item
+        android:id="@+id/navigation_filter"
+        android:icon="@drawable/ic_baseline_filter_list"
+        android:title="Filters" />
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_baseline_perfil"
+        android:title="Perfil" />
+</menu>
