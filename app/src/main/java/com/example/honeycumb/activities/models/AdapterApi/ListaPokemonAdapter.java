@@ -46,11 +46,11 @@ public class ListaPokemonAdapter extends  RecyclerView.Adapter<ListaPokemonAdapt
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {// se asigna posicion a los atrinutos traidos
         Pokemon p=dataset.get(position);
         holder.nombreTextView.setText(p.getName());//inserta el nombre en el item
-        Glide.with(context)
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+p.getNumber()+ ".png")
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.fotoImageView);
+        Glide.with(context)// que obtiene la imagen
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+p.getNumber()+ ".png")//contatenamos que posicion quiero que me traiga
+                .centerCrop()// que la imagen quede centrada
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//limpia del cache para que traiga otras imagenes
+                .into(holder.fotoImageView);//que lo acomopode en holder fotoimageview  que viene del adaptador
 
     }
 

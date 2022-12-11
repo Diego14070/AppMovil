@@ -1,18 +1,18 @@
 package com.example.honeycumb.activities.models;
 
 public class Pokemon {
-    private int numero;//las imagenes vienen con un numero se desliga el numero de la url
+    private int number;//las imagenes vienen con un numero se desliga el numero de la url
     private String name;
     private String url;
 
 
-    public int getNumero() {
-        
-        return numero;
+    public int getNumber() {
+        String [] urlparte= url.split("/"); //separar de la url
+        return Integer.parseInt(urlparte[urlparte.length-1]);// definir desde que posicion los traera
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumber(int numero) {
+        this.number = numero;
     }
 
     public String getName() {

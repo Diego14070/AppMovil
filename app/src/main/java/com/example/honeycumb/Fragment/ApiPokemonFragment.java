@@ -2,6 +2,7 @@ package com.example.honeycumb.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class ApiPokemonFragment extends Fragment {
     private RecyclerView recyclerView;
     private ListaPokemonAdapter listaPokemonAdapter;
     View view;
+    private int offset; // variable que trae todos los objetos del api
+    private boolean adaptoParaCargar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,7 +80,7 @@ public class ApiPokemonFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+// metodo de control de las vistas
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,29 +90,54 @@ public class ApiPokemonFragment extends Fragment {
         view=inflater.inflate(R.layout.fragment_api, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerViewApi);
-        listaPokemonAdapter =new ListaPokemonAdapter(getContext());
+        listaPokemonAdapter =new ListaPokemonAdapter(getContext());//si es una activiti seria this.activity
         recyclerView.setAdapter(listaPokemonAdapter);
         recyclerView.setHasFixedSize(true);// trae los elementos como un mapeo, en un arreglo
         GridLayoutManager layoutManager=new GridLayoutManager(getContext(),3);//cuantos cuadros va tener la recycleview
         recyclerView.setLayoutManager(layoutManager);
 
+        //metodo de desplazamiento del recycle view
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {//scroll es mover de arriba abajo, se pasa un escuchador al recicle view
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy); //scroll en eje x and y
+                //quien se scroll
+                if(dy>0){
+
+                    //necesito que sean visibles 3 item
+
+                    int visibleItemCount= layoutManager.getChildCount(); //visualizar
+                    int totalItemCount=layoutManager.getItemCount();//dimensiones
+                    int pastVisibleitems=layoutManager.findFirstVisibleItemPosition();// guardar posiciones
+                    if(adaptoParaCargar){
+                        if
+                    }
+                }
+            }
+        });
+
         retrofit=new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create()) //pasar a Gson para obtener respuesta//
                 .build();
-        obtenerDatos();
+        obtenerDatos(offset);//
+
+        adaptoParaCargar=true;
+
+        offset=0;
 
         return view;
     }
 
 
 //obtiene los datos de el api
-    public void obtenerDatos () {
+    public void obtenerDatos (int offset) {
         PokeaApiService service=retrofit.create(PokeaApiService.class);
-        Call<PokemonRespuesta> pokemonRespuestaCall= service.obtenerListaPokemon();
+        Call<PokemonRespuesta> pokemonRespuestaCall= service.obtenerListaPokemon(20, offset);//limiti de datos traidos del api
 
         pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {//enqueue metodo exclusivo de android que maneja resultados para que android maneje las respuestas
-            @Override
+            @Override//metodo que maneja los resultados con enqueue para que android envie las respuestas
             public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
                 if(response.isSuccessful()){//metodo si toma bien la url
                     PokemonRespuesta pokemonRespuesta = response.body();
