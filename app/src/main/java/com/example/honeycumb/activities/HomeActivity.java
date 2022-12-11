@@ -2,7 +2,6 @@ package com.example.honeycumb.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,7 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.honeycumb.Fragment.ChatFragment;
-import com.example.honeycumb.Fragment.FiltersFragment;
+import com.example.honeycumb.Fragment.ApiPokemonFragment;
 import com.example.honeycumb.Fragment.HomeFragment;
 import com.example.honeycumb.Fragment.ProfileFragment;
 import com.example.honeycumb.R;
@@ -50,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
                         openFragment(new ProfileFragment());
 
                     }else if(item.getItemId()==R.id.navigation_filter){
-                        openFragment(new FiltersFragment());
+                        openFragment(new ApiPokemonFragment());
 
                     }
                     return false;

@@ -39,7 +39,6 @@ public class UserProviders {
         Map<String,Object> map=new HashMap<>();
         map.put("username" ,user.getUsername());/*se mapean los datos y se envian a la base de datos */
         map.put("email",user.getEmail());
-        map.put("password",user.getPassword());
         return mCollection.document(user.getId()).update(map);
     }
 
