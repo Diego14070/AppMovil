@@ -111,21 +111,29 @@ public class ApiPokemonFragment extends Fragment {
                     int totalItemCount=layoutManager.getItemCount();//dimensiones
                     int pastVisibleitems=layoutManager.findFirstVisibleItemPosition();// guardar posiciones
                     if(adaptoParaCargar){
-                        if
+                        if((visibleItemCount+ pastVisibleitems)>=totalItemCount){
+                            Log.i(TAG, "final api");
+                            //se llega al final del consumo pero se debe incrementar el valor del offset para que continue el consumo del api
+                            adaptoParaCargar=false;
+                            offset+=20;
+                            obtenerDatos(offset);
+                        }
                     }
                 }
             }
         });
 
         retrofit=new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
+                .baseUrl("https://pokeapi.co/api/v2/")//consulta la url
                 .addConverterFactory(GsonConverterFactory.create()) //pasar a Gson para obtener respuesta//
-                .build();
-        obtenerDatos(offset);//
+                .build();//obtiene las respuestas
 
-        adaptoParaCargar=true;
+        adaptoParaCargar=true;//nueva consulta para permitir una sola ejecucion
 
         offset=0;
+
+        obtenerDatos(offset);
+
 
         return view;
     }
@@ -139,6 +147,7 @@ public class ApiPokemonFragment extends Fragment {
         pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {//enqueue metodo exclusivo de android que maneja resultados para que android maneje las respuestas
             @Override//metodo que maneja los resultados con enqueue para que android envie las respuestas
             public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
+                adaptoParaCargar=true;
                 if(response.isSuccessful()){//metodo si toma bien la url
                     PokemonRespuesta pokemonRespuesta = response.body();
                     ArrayList<Pokemon> listaPokemon= pokemonRespuesta.getResults();//obtiene los datos y los recorre
@@ -148,6 +157,7 @@ public class ApiPokemonFragment extends Fragment {
                         Log.i(TAG, "pokemon"+p.getName());
                     }
                 }else {
+                    adaptoParaCargar=true;
                     Log.e(TAG,"Onresponse"+response.errorBody());
                 }
             }
