@@ -1,4 +1,4 @@
-package com.example.honeycumb.activities.models;
+package com.example.honeycumb.activities.Utils.models;
 
 public class Pokemon {
     private int number;//las imagenes vienen con un numero se desliga el numero de la url

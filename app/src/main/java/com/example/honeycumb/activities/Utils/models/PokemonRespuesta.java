@@ -1,4 +1,4 @@
-package com.example.honeycumb.activities.models;
+package com.example.honeycumb.activities.Utils.models;
 
 import java.util.ArrayList;
 

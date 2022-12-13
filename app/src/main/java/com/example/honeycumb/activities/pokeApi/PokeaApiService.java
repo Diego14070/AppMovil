@@ -1,6 +1,6 @@
 package com.example.honeycumb.activities.pokeApi;
 
-import com.example.honeycumb.activities.models.PokemonRespuesta;
+import com.example.honeycumb.activities.Utils.models.PokemonRespuesta;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

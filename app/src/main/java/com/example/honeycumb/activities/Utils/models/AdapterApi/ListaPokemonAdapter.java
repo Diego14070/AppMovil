@@ -1,7 +1,6 @@
-package com.example.honeycumb.activities.models.AdapterApi;
+package com.example.honeycumb.activities.Utils.models.AdapterApi;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 import com.example.honeycumb.R;
-import com.example.honeycumb.activities.models.Pokemon;
+import com.example.honeycumb.activities.Utils.models.Pokemon;
 
 import java.util.ArrayList;
 
@@ -43,14 +42,15 @@ public class ListaPokemonAdapter extends  RecyclerView.Adapter<ListaPokemonAdapt
 
     //metodo encargado de poscionar los datos e insertarlos
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {// se asigna posicion a los atrinutos traidos
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Pokemon p=dataset.get(position);
-        holder.nombreTextView.setText(p.getName());//inserta el nombre en el item
-        Glide.with(context)// que obtiene la imagen
-                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+p.getNumber()+ ".png")//contatenamos que posicion quiero que me traiga
+        holder.nombreTextView.setText(p.getName());
+        Glide.with(context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"+p.getNumber()+ ".png")
                 .centerCrop()// que la imagen quede centrada
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//limpia del cache para que traiga otras imagenes
                 .into(holder.fotoImageView);//que lo acomopode en holder fotoimageview  que viene del adaptador
+
 
     }
 

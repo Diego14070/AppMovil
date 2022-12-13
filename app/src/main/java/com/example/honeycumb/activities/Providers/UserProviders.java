@@ -1,6 +1,6 @@
 package com.example.honeycumb.activities.Providers;
 
-import com.example.honeycumb.activities.models.User;
+import com.example.honeycumb.activities.Utils.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;

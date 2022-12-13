@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.honeycumb.R;
-import com.example.honeycumb.activities.models.AdapterApi.ListaPokemonAdapter;
-import com.example.honeycumb.activities.models.Pokemon;
-import com.example.honeycumb.activities.models.PokemonRespuesta;
+import com.example.honeycumb.activities.Utils.models.AdapterApi.ListaPokemonAdapter;
+import com.example.honeycumb.activities.Utils.models.Pokemon;
+import com.example.honeycumb.activities.Utils.models.PokemonRespuesta;
 import com.example.honeycumb.activities.pokeApi.PokeaApiService;
 
 import java.util.ArrayList;
@@ -39,7 +39,8 @@ public class ApiPokemonFragment extends Fragment {
     private ListaPokemonAdapter listaPokemonAdapter;
     View view;
     private int offset; // variable que trae todos los objetos del api
-    private boolean adaptoParaCargar;
+    private boolean aptoparacargar;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,6 +86,7 @@ public class ApiPokemonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         // Inflate the layout for this fragment //organiza la vista en el recycleview
 
         view=inflater.inflate(R.layout.fragment_api, container, false);
@@ -93,7 +95,7 @@ public class ApiPokemonFragment extends Fragment {
         listaPokemonAdapter =new ListaPokemonAdapter(getContext());//si es una activiti seria this.activity
         recyclerView.setAdapter(listaPokemonAdapter);
         recyclerView.setHasFixedSize(true);// trae los elementos como un mapeo, en un arreglo
-        GridLayoutManager layoutManager=new GridLayoutManager(getContext(),3);//cuantos cuadros va tener la recycleview
+        GridLayoutManager layoutManager=new GridLayoutManager(requireContext(),3);//cuantos cuadros va tener la recycleview
         recyclerView.setLayoutManager(layoutManager);
 
         //metodo de desplazamiento del recycle view
@@ -102,20 +104,20 @@ public class ApiPokemonFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy); //scroll en eje x and y
-                //quien se scroll
+                //quien hace el scroll
+
                 if(dy>0){
-
                     //necesito que sean visibles 3 item
-
-                    int visibleItemCount= layoutManager.getChildCount(); //visualizar
+                    int visibleItemCount= layoutManager.getItemCount(); //visualizar
                     int totalItemCount=layoutManager.getItemCount();//dimensiones
                     int pastVisibleitems=layoutManager.findFirstVisibleItemPosition();// guardar posiciones
-                    if(adaptoParaCargar){
-                        if((visibleItemCount+ pastVisibleitems)>=totalItemCount){
+
+                    if(aptoparacargar){
+                        if((visibleItemCount+ pastVisibleitems) >= totalItemCount) {
                             Log.i(TAG, "final api");
                             //se llega al final del consumo pero se debe incrementar el valor del offset para que continue el consumo del api
-                            adaptoParaCargar=false;
-                            offset+=20;
+                            aptoparacargar=false;
+                            offset +=22;
                             obtenerDatos(offset);
                         }
                     }
@@ -123,17 +125,14 @@ public class ApiPokemonFragment extends Fragment {
             }
         });
 
-        retrofit=new Retrofit.Builder()
+        retrofit=new Retrofit.Builder()//se llama retrofit para consumir el api
                 .baseUrl("https://pokeapi.co/api/v2/")//consulta la url
                 .addConverterFactory(GsonConverterFactory.create()) //pasar a Gson para obtener respuesta//
                 .build();//obtiene las respuestas
 
-        adaptoParaCargar=true;//nueva consulta para permitir una sola ejecucion
-
+        aptoparacargar=true;//nueva consulta para permitir una sola ejecucion
         offset=0;
-
         obtenerDatos(offset);
-
 
         return view;
     }
@@ -142,12 +141,12 @@ public class ApiPokemonFragment extends Fragment {
 //obtiene los datos de el api
     public void obtenerDatos (int offset) {
         PokeaApiService service=retrofit.create(PokeaApiService.class);
-        Call<PokemonRespuesta> pokemonRespuestaCall= service.obtenerListaPokemon(20, offset);//limiti de datos traidos del api
+        Call<PokemonRespuesta> pokemonRespuestaCall= service.obtenerListaPokemon(22, offset);//limiti de datos traidos del api
 
         pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {//enqueue metodo exclusivo de android que maneja resultados para que android maneje las respuestas
             @Override//metodo que maneja los resultados con enqueue para que android envie las respuestas
             public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
-                adaptoParaCargar=true;
+                aptoparacargar=true;
                 if(response.isSuccessful()){//metodo si toma bien la url
                     PokemonRespuesta pokemonRespuesta = response.body();
                     ArrayList<Pokemon> listaPokemon= pokemonRespuesta.getResults();//obtiene los datos y los recorre
@@ -157,19 +156,16 @@ public class ApiPokemonFragment extends Fragment {
                         Log.i(TAG, "pokemon"+p.getName());
                     }
                 }else {
-                    adaptoParaCargar=true;
                     Log.e(TAG,"Onresponse"+response.errorBody());
                 }
             }
 
+
             @Override
             public void onFailure(Call<PokemonRespuesta> call, Throwable t) {//metodo si la url no funciona
+                aptoparacargar=true;
                 Log.e(TAG,"onFailure"+t.getMessage());
-
             }
         });
-
-
-
     }
 }
